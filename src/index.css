@@ -1,0 +1,288 @@
+/* Reset cơ bản */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Roboto, sans-serif;
+}
+
+/* Galaxy background đổi màu từ từ */
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  color: #fff;
+
+  background: radial-gradient(circle at 30% 20%, #04010c, #1a038b 40%, #0f172a 90%),
+              radial-gradient(circle at 80% 80%, #8ba5ed, #1507d4 30%, #041334 80%);
+  background-size: 200% 200%;
+  animation: galaxyFlow 30s ease-in-out infinite alternate;
+}
+
+/* Animation đổi màu và di chuyển */
+@keyframes galaxyFlow {
+  0% {
+    background-position: 0% 0%;
+    background-color: #051947;
+  }
+  25% {
+    background-position: 50% 25%;
+    background-color: #08052c;
+  }
+  50% {
+    background-position: 100% 50%;
+    background-color: #03020c;
+  }
+  75% {
+    background-position: 50% 75%;
+    background-color: #070112;
+  }
+  100% {
+    background-position: 0% 100%;
+    background-color: #000207;
+  }
+}
+
+
+
+/* App Container */
+.app {
+  width: 100%;
+  max-width: 700px;
+  background: linear-gradient(
+    135deg,
+    rgba(43, 188, 236, 0.8),  /* light blue */
+    rgba(18, 75, 151, 0.8),  /* light steel blue */
+    rgba(133, 122, 248, 0.8) 
+  );
+
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 12px 40px rgba(0, 180, 255, 0.4);
+  text-align: center;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  animation: fadeIn 0.8s ease;
+  transform: scale(0.85);
+  transform-origin: center;
+}
+
+
+/* Header */
+.header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 24px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  background: linear-gradient(90deg, #facc15, #f97316, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% 100%; /* gradient di chuyển chậm hơn */
+  animation: gradientMove 6s linear infinite;
+}
+
+/* gradient di chuyển từ trái sang phải */
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* glow nhẹ, dịu mắt hơn */
+@keyframes glow {
+  0% { text-shadow: 0 0 3px #fff, 0 0 6px #ece28f, 0 0 12px #ff8a50; }
+  50% { text-shadow: 0 0 4px #fff, 0 0 8px #dbd281, 0 0 16px #e8758f; }
+  100% { text-shadow: 0 0 3px #fff, 0 0 6px #ebe295, 0 0 12px #ff8a50; }
+}
+
+
+/* Main */
+.main {
+  margin: 20px 0;
+}
+
+.img-result.not-a-dragon-fruit {
+  background-color: #ff9800;
+  color: white;
+}
+
+/* Upload box */
+.upload-box {
+  border: 2px dashed #38bdf8;
+  border-radius: 12px;
+  padding: 15px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  transition: 0.3s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.upload-box:hover {
+  background: rgba(106, 158, 255, 0.15);
+  border-color: #f8d210;
+  transform: scale(1.02);
+}
+
+.upload-box p {
+  font-size: 1rem;
+  color: #cbd5e0;
+}
+
+.upload-box.drag-over {
+  background: rgba(77, 166, 255, 0.25);
+  border-color: #f8d210;
+}
+
+.file-input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Preview container cho tối đa 3 ảnh */
+.preview-container {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+/* Preview image card */
+.preview-item {
+  position: relative;
+  width: 180px;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.preview-item:hover {
+  transform: scale(1.05);
+}
+
+.preview-item img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Nút xóa */
+.remove-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: rgba(255, 0, 0, 0.85);
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 1rem;
+  padding: 2px 6px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+/* Prediction từng ảnh */
+.img-result {
+  text-align: center;
+  font-weight: bold;
+  padding: 4px 6px;
+  border-radius: 6px;
+  margin-top: 5px;
+  font-size: 0.9rem;
+}
+
+.img-result.good {
+  background: rgba(0, 255, 127, 0.15);
+  border: 1px solid #00ff7f;
+  color: #00ff7f;
+}
+
+.img-result.reject {
+  background: rgba(255, 69, 58, 0.15);
+  border: 1px solid #ff453a;
+  color: #ff453a;
+}
+
+.img-result.immature {
+  background: rgba(255, 215, 0, 0.15);
+  border: 1px solid #ffd700;
+  color: #ffd700;
+}
+
+/* Predict button */
+.predict-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #fff;
+  background: linear-gradient(90deg, #00f0ff, #6a00ff);
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0, 240, 255, 0.5);
+  transition: all 0.3s ease;
+}
+
+.predict-btn:hover {
+  background: linear-gradient(90deg, #f8d210, #ff6a00);
+  box-shadow: 0 2px 10px rgba(255, 106, 0, 0.6);
+  transform: translateY(-3px);
+}
+
+/* Kết quả tổng hợp */
+.final-result {
+  margin-top: 25px;
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  animation: fadeIn 0.5s ease;
+}
+
+.final-result.good {
+  background: rgba(0, 255, 127, 0.15);
+  border: 2px solid #00ff7f;
+  color: #00ff7f;
+}
+
+.final-result.reject {
+  background: rgba(255, 69, 58, 0.15);
+  border: 2px solid #ff453a;
+  color: #ff453a;
+}
+
+.final-result.immature {
+  background: rgba(255, 215, 0, 0.15);
+  border: 2px solid #ffd700;
+  color: #ffd700;
+}
+
+/* Footer */
+.footer {
+  margin-top: 25px;
+  font-size: 0.95rem;
+  color: #bbb;
+  letter-spacing: 1px;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
