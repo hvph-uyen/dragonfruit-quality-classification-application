@@ -3,17 +3,21 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torchvision import models, transforms
 from PIL import Image, UnidentifiedImageError
+from rembg import remove
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 import io
 import logging
+import os
 
 # ----------------- FastAPI setup -----------------
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # cho phép React/Frontend bất kỳ gọi API
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -58,7 +62,7 @@ detector_model, detector_classes = load_resnet(
     "detector_model.pth", num_classes=2, device=device
 )
 classifier_model, classifier_classes = load_resnet(
-    "classifier_model.pth", num_classes=3, device=device
+    "classifier_model2.pth", num_classes=3, device=device
 )
 
 # ----------------- API predict -----------------
@@ -71,12 +75,14 @@ async def predict(file: UploadFile = File(...)):
         except UnidentifiedImageError:
             return {"error": "File upload không phải ảnh hợp lệ"}
 
+        # 👉 Remove background trước khi predict
+        image = remove(image).convert("RGB")
+
         # Step 1: Detector
         det_label, det_probs = predict_image(detector_model, detector_classes, image, device)
         logging.info(f"Detector: {det_label}, Probs: {det_probs}")
 
-        # Nếu không phải thanh long hoặc xác suất thanh long thấp
-        if det_label == "not_dragonfruit" or det_probs.get("dragonfruit", 0) < 0.95:
+        if det_label == "not_dragonfruit" or det_probs.get("dragonfruit", 0) < 0.8:
             return {
                 "result": "not_dragonfruit",
                 "stage": "detector",
@@ -87,20 +93,13 @@ async def predict(file: UploadFile = File(...)):
         cls_label, cls_probs = predict_image(classifier_model, classifier_classes, image, device)
         logging.info(f"Classifier: {cls_label}, Probs: {cls_probs}")
 
-        # Rule-based refinement
-        if cls_probs.get("good", 0) > 0.97:
+        if cls_probs.get("good", 0) > 0.93:
             final_label = "good"
         else:
             if cls_probs.get("reject", 0) > cls_probs.get("immature", 0):
                 final_label = "reject"
             else:
-                if cls_probs.get("immature", 0) > 0.8:
-                    final_label = "immature"
-                else:
-                    if cls_probs.get("reject", 0) > 0.02:
-                        final_label = "reject"
-                    else:
-                        final_label = "immature"
+                final_label = "immature"
 
         return {
             "result": final_label,
@@ -112,16 +111,10 @@ async def predict(file: UploadFile = File(...)):
     except Exception as e:
         logging.error(f"Prediction error: {e}")
         return {"error": str(e)}
-    
-from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
-import os
 
-# Mount thư mục static (JS, CSS, images sau khi build)
-app.mount("/static", StaticFiles(directory="build/static"), name="static")
+# ----------------- Serve frontend -----------------
+app.mount("/static", StaticFiles(directory="dist/assets"), name="static")
 
-# Route trả về index.html (giao diện React)
 @app.get("/")
-async def serve_frontend():
-    index_path = os.path.join("build", "index.html")
-    return FileResponse(index_path)
+async def root():
+    return FileResponse("dist/index.html")
