@@ -25,18 +25,18 @@ Trong dự án sử dụng 2 mô hình `.pth` đã huấn luyện sẵn:
 ---
 
 ## 3. Hướng dẫn cài đặt và chạy dự án:
-#    a. Cài đặt môi trường Python:
-	Mở terminal và chạy lệnh sau để cài các thư viện cần thiết: <br>
+###    a. Cài đặt môi trường Python:
+	Mở terminal và chạy lệnh sau để cài các thư viện cần thiết:
 	pip install <tên_thư_viện>
 
-#    b. Chạy server backend:
-	Sau khi cài xong thư viện, chạy file server.py bằng lệnh: <br>
+###    b. Chạy server backend:
+	Sau khi cài xong thư viện, chạy file server.py bằng lệnh: 
 	python server.py 
 
-#    c. Cài đặt và chạy frontend (React):
-	Chuyển vào thư mục frontend (nơi có package.json), sau đó chạy: <br>
-	npm install <br>
-	npm run start <br>
+###    c. Cài đặt và chạy frontend (React):
+	Chuyển vào thư mục frontend (nơi có package.json), sau đó chạy: 
+	npm install 
+	npm run start
 	Trang web sẽ được chạy tại địa chỉ: http://localhost:5173
 
 ## 4. Thông tin mô hình sử dụng:
@@ -59,7 +59,7 @@ Trong dự án sử dụng 2 mô hình `.pth` đã huấn luyện sẵn:
     • opencv-python
     • pillow
 
-8. Thông tin tác giả:
-    • Họ tên: [Tên của bạn]
-    • Email liên hệ: [Email nếu cần]
+## 8. Thông tin tác giả:
+    • Tên nhóm: JOILBEE
+    • Email liên hệ: thitkhomamruot7749@gmail.com
     • Ngày hoàn thành dự án: Tháng 9 năm 2025
