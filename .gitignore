@@ -1,2 +1,42 @@
+# ===== Python =====
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pkl
+*.pt
+*.pth
+*.log
+.env
+venv/
+.venv/
+.env.local
+.DS_Store
+
+# Model checkpoints (rất nặng)
+detector_model.pth
+classifier_model2.pth
+
+# Dataset, ảnh test
+dataset/
+test_image/
+
+# Node / React 
 node_modules/
-__pycache__/git 
+dist/
+.vite/
+*.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ===== OS =====
+Thumbs.db
+desktop.ini
+
+# ===== IDE =====
+.vscode/
+.idea/

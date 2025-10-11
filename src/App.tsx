@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import "./index.css";
 
 interface ImageItem {
@@ -10,10 +10,9 @@ interface ImageItem {
 const App: React.FC = () => {
   const [images, setImages] = useState<ImageItem[]>([]);
   const [dragOver, setDragOver] = useState(false);
-
   const maxImages = 3;
 
-  // Upload file từ input
+// Upload từ file input (chọn hoặc chụp)
   const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const files = Array.from(e.target.files).slice(0, maxImages - images.length);
@@ -25,7 +24,7 @@ const App: React.FC = () => {
     setImages((prev) => [...prev, ...newImages]);
   };
 
-  // Kéo thả file
+// Kéo thả
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setDragOver(false);
@@ -39,20 +38,19 @@ const App: React.FC = () => {
     setImages((prev) => [...prev, ...newImages]);
   };
 
-  // Xóa ảnh
+// Xóa ảnh
   const handleRemove = (index: number) => {
     setImages((prev) => prev.filter((_, i) => i !== index));
   };
 
-  // Gọi API predict cho từng ảnh
+  // Gọi API predict
   const handlePredict = async () => {
     const updatedImages = await Promise.all(
       images.map(async (img) => {
         const formData = new FormData();
         formData.append("file", img.file);
-
         try {
-          const res = await fetch("http://localhost:8000/predict", {
+          const res = await fetch(`${window.location.origin.replace("5173", "8000")}/predict`, { // đổi IP laptop
             method: "POST",
             body: formData,
           });
@@ -64,11 +62,9 @@ const App: React.FC = () => {
         }
       })
     );
-
     setImages(updatedImages);
   };
 
-  // Tổng hợp kết quả cuối cùng
   const getFinalResult = () => {
     if (images.some((img) => img.prediction.toLowerCase() === "not_dragonfruit")) return "Not a Dragon Fruit";
     if (images.some((img) => img.prediction.toLowerCase() === "reject")) return "Reject";
@@ -84,6 +80,7 @@ const App: React.FC = () => {
       </header>
 
       <main className="main">
+        {/* Upload box */}
         <div
           className={`upload-box ${dragOver ? "drag-over" : ""}`}
           onDragOver={(e) => {
@@ -93,7 +90,7 @@ const App: React.FC = () => {
           onDragLeave={() => setDragOver(false)}
           onDrop={handleDrop}
         >
-          {images.length === 0 && <p>Kéo thả ảnh vào đây hoặc chọn để tải lên</p>}
+          {images.length === 0 && <p>Kéo thả ảnh hoặc chọn/chụp để tải lên</p>}
           <input
             type="file"
             accept="image/*"
@@ -102,6 +99,7 @@ const App: React.FC = () => {
             onChange={handleUpload}
             disabled={images.length >= maxImages}
           />
+
           <div className="preview-container">
             {images.map((img, idx) => (
               <div key={idx} className="preview-item">
@@ -119,9 +117,23 @@ const App: React.FC = () => {
           </div>
         </div>
 
+        {/* mở camera */}
+        <div className="camera-upload">
+          <label className="camera-btn">
+            📷 Chụp ảnh
+            <input
+              type="file"
+              accept="image/*"
+              capture="camera"
+              onChange={handleUpload}
+              style={{ display: "none" }}
+            />
+          </label>
+        </div>
+
         {images.length > 0 && (
           <button className="predict-btn" onClick={handlePredict}>
-            Nhận diện ảnh
+            Kiểm định chất lượng
           </button>
         )}
 
@@ -133,7 +145,7 @@ const App: React.FC = () => {
       </main>
 
       <footer className="footer">
-        <p>© 2025 DragonDetection - JOLIBEE</p>
+        <p>© 2025 Dragonfruit Quality Classification - JOLIBEE</p>
       </footer>
     </div>
   );

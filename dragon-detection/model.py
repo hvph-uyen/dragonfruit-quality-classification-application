@@ -136,7 +136,7 @@ if __name__ == "__main__":
                           else "cpu")
 
      # training DETECTOR (binary: dragonfruit vs not_dragonfruit)
-     train_two_stage_resnet(
+    train_two_stage_resnet(
          data_dir="dataset2",
          model_save_path="model/detector_model.pth",
          num_classes=2,
@@ -150,3 +150,4 @@ if __name__ == "__main__":
         num_classes=3,
         device=device
     )
+    
