@@ -9,44 +9,44 @@ The project uses two pre-trained .pth models:
 - Detection model: Locates dragonfruits within an image.
 - Classification model: Identifies the type of dragonfruit (`reject`, `good`, `immature`).
 
-## 2. Folder Structure
+## 2. Project structure
 ```
 ├── dist/
-│ ├── assets/
+│ ├── assets/ # static compiled assets
 │ └── index.html
 │
 ├── dragon-detection/
-│ ├── model/
-│ │ ├── classifier_model2.pth
-│ │ └── detector_model.pth
-│ ├── model.py
-│ ├── prepareData.py
-│ ├── tsconfig.json
-│ └── use_model.py
+│ ├── model/ # Pre-trained models
+│ │ ├── classifier_model2.pth # classification model
+│ │ └── detector_model.pth # detection model
+│ ├── model.py # model source code
+│ ├── prepareData.py # data preparation script
+│ ├── tsconfig.json # TypeScript configuration
+│ └── use_model.py # inference script for model usage
 │
-├── src/
-│ ├── App.tsx
-│ ├── ImageUploader.tsx
-│ ├── index.css
-│ └── main.tsx
+├── src/ 
+│ ├── App.tsx # main React component
+│ ├── ImageUploader.tsx # component for uploading images
+│ ├── index.css # global styles
+│ └── main.tsx # React entry point
 │
-├── .gitignore
-├── README.md
-├── index.html
-├── package-lock.json
-├── package.json
-├── requirements.txt
-├── server.py
-└── tsconfig.json
+├── .gitignore #
+├── README.md # this file
+├── index.html # HTML template for the app
+├── package-lock.json 
+├── package.json # Node.js dependencies and scripts
+├── requirements.txt # Python dependencies
+├── server.py # backend server
+└── tsconfig.json # TypeScript configuration for frontend
 ```
 
 ## 3. Installation & Setup
 
 ### a. Set up the Python environment
 
-Open a terminal and install the required Python libraries:
+Open a terminal and install the required libraries:
 
-```pip install <library_names>```
+```pip install -r requirements.txt```
 
 ### b. Run the backend server
 
@@ -77,24 +77,17 @@ The web application will be available at: http://localhost:5173
 
 ## 6. Usage Instructions
 
-a. Open the web app at `http://localhost:5173`
+- Open the web app at `http://localhost:5173`
 
-b. Upload an image containing dragon fruits
+- Upload an image containing dragon fruits
 
-c. The system will process the image, display detected fruits with bounding boxes, and classify each fruit
+- The system will process the image, display detected fruits with bounding boxes, and classify each fruit
 
-d. Try uploading different images to test performance
+- Try uploading different images to test performance
 
-## 7. Required Python Libraries
+## 7. Author Information
 
-- torch
-- numpy
-- opencv-python
-- pillow
+- Team name: JOILBEE
+- Contact email: thitkhomamruot7749@gmail.com
 
-## 8. Author Information
-
-- Team Name: JOILBEE
-- Contact Email: thitkhomamruot7749@gmail.com
-
-Created September 2025
+Created September 2025.
