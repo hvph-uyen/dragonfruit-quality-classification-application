@@ -14,6 +14,7 @@ import os
 
 # ----------------- FastAPI setup -----------------
 app = FastAPI()
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 app.add_middleware(
     CORSMiddleware,
@@ -59,10 +60,12 @@ device = torch.device("mps" if torch.backends.mps.is_available()
 logging.info(f"Using device: {device}")
 
 detector_model, detector_classes = load_resnet(
-    "detector_model.pth", num_classes=2, device=device
+    os.path.join(BASE_DIR, "dragon-detection", "model", "detector_model.pth"),
+    num_classes=2, device=device
 )
 classifier_model, classifier_classes = load_resnet(
-    "classifier_model2.pth", num_classes=3, device=device
+    os.path.join(BASE_DIR, "dragon-detection", "model", "classifier_model2.pth"),
+    num_classes=3, device=device
 )
 
 # ----------------- API predict -----------------
