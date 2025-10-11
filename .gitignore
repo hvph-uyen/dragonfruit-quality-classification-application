@@ -13,10 +13,6 @@ venv/
 .env.local
 .DS_Store
 
-# Model checkpoints (rất nặng)
-detector_model.pth
-classifier_model2.pth
-
 # Dataset, ảnh test
 dataset/
 test_image/
