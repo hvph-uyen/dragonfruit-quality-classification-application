@@ -3,9 +3,7 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
-*.pkl
 *.pt
-*.pth
 *.log
 .env
 venv/
