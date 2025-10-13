@@ -11,24 +11,29 @@ The project uses two pre-trained .pth models:
 
 ## 2. Project structure
 ```
-├── dist/
-│ ├── assets/ # static compiled assets
-│ └── index.html
+├── dist/                          # compiled frontend distribution files
+│   ├── assets/                    # static compiled assets (CSS, JS, images, etc.)
+│   └── index.html                 # main HTML entry point
 │
-├── dragon-detection/
-│ ├── model/ # Pre-trained models
-│ │ ├── classifier_model2.pth # classification model
-│ │ └── detector_model.pth # detection model
-│ ├── model.py # model source code
-│ ├── prepareData.py # data preparation script
-│ ├── tsconfig.json # TypeScript configuration
-│ └── use_model.py # inference script for model usage
-│
+├── model/                         # directory for classification models
+│   ├── EfficientNetV2/            # EfficientNetV2 model files
+│   │   ├── model2.py              # training script
+│   │   ├── use_model2.py          # inference (model usage) script
+│   │   └── model/                 # stored model weights
+│   │       └── efficientnet_v2_s.pth  # trained classification model
+│   │
+│   ├── ResNet18/                  # ResNet18 model files
+│   │   ├── model.py               # training script
+│   │   ├── use_model.py           # inference (model usage) script
+│   │   └── model/                 # stored model weights
+│   │       ├── classifier_model2.pth  # trained classification model
+│   │       └── detector_model.pth     # trained detection model
+|
 ├── src/ 
-│ ├── App.tsx # main React component
-│ ├── ImageUploader.tsx # component for uploading images
-│ ├── index.css # global styles
-│ └── main.tsx # React entry point
+│   ├── App.tsx # main React component
+│   ├── ImageUploader.tsx # component for uploading images
+│   ├── index.css # global styles
+│   └── main.tsx # React entry point
 │
 ├── .gitignore #
 ├── README.md # this file
@@ -66,7 +71,13 @@ The web application will be available at: http://localhost:5173
 
 ## 4. Model Information
 
-`classifier_model2.pth`: Classifies dragon fruits into categories. The model was trained on real-world image datasets.
+**EfficientNetV2:**
+
+`efficientnet_v2_s.pth`: Classifies dragonfruits into 4 categories (*good*, *reject*, *immature*, *not_dragonfruit*).
+
+**ResNet18:** 
+
+`classifier_model2.pth`: Classifies dragonfruits into 3 categories (like above without *not_dragonfruit*).
 
 `detector_model.pth`: Detects and draws bounding boxes around dragon fruits in images.
 
