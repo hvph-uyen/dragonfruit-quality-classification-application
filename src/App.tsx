@@ -55,7 +55,7 @@ const App: React.FC = () => {
             body: formData,
           });
           const data = await res.json();
-          return { ...img, prediction: data.result };
+          return { ...img, prediction: data.final_result };
         } catch (err) {
           console.error(err);
           return { ...img, prediction: "Lỗi server!" };
