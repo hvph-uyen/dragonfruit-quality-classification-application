@@ -81,12 +81,18 @@ The web application will be available at: http://localhost:5173
 
 `detector_model.pth`: Detects and draws bounding boxes around dragon fruits in images.
 
-## 5. System Requirements
+## 5. Model Performance
+
+After training and evaluating both models on our team's custom testing dataset, the following overall accuracies were achieved:
+- ResNet18:	76%
+- EfficientNetV2:	83%
+
+## 6. System Requirements
 
 - Python: Version 3.8 or higher
 - Node.js: Version 14 or higher
 
-## 6. Usage Instructions
+## 7. Usage Instructions
 
 - Open the web app at `http://localhost:5173`
 
@@ -96,7 +102,7 @@ The web application will be available at: http://localhost:5173
 
 - Try uploading different images to test performance
 
-## 7. Author Information
+## 8. Author Information
 
 - Team name: JOILBEE
 - Contact email: thitkhomamruot7749@gmail.com
